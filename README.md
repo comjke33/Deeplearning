@@ -47,3 +47,5 @@
 - HTML 개념 공부
 - CSS 개념 공부
 
+### EMAIL ###
+<comjke33@inu.ac.kr>
