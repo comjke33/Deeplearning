@@ -106,3 +106,14 @@ model = tf.keras.Sequential([
 # metrics는 training과 testing을 어떻게 진행할 것인지 정함. 정확하게 하겠다~ 라는 accuracy 이용.
 model.compile(optimizer='adam',
               loss=tf.keras.losses.SparseCategoricalCrossentropy(), metrics=['accuracy'])
+
+# 모델을 훈련한다.
+# epoch값만큼 데이터를 반복해 읽으면서 훈련한다. dataset.repeat() (epochs라는 파라미터가 존재함)
+# dataset.shuffle() 데이터셋을 랜덤으로 섞어서 배운다.
+# dataset.batch() 모델 파라미터를 업데이트할 때 몇개의 sample마다 가중치를 갱신할 것인지 설정함. batch_size라는 파라미터가 존재함.
+BATCH_SIZE = 32
+train_dataset = train_dataset.cache().repeat().shuffle(num_train_examples).batch(BATCH_SIZE)
+test_dataset = test_dataset.cache().batch(BATCH_SIZE)
+
+# 훈련
+model.fit(train_dataset, epochs=10, steps_per_epoch=math.ceil(num_train_examples/BATCH_SIZE))
