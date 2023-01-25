@@ -165,7 +165,7 @@ model.compile(optimizer='adam', loss=tf.keras.losses.SparseCategoricalCrossentro
 # 왜냐면 30*80 = 2400
 epochs = 80
 
-# 모델을 훈련했다.
+# model.fit()를 이용해서 모델을 훈련했다.
 # 기존 코드에서 total_train과 total_val에 관련된 부분만 수정해서 완성했다.
 total_train = num_roses_tr + num_daisy_tr + num_dandelion_tr + num_sunflowers_tr + num_tulips_tr
 total_val = num_roses_val + num_daisy_val + num_dandelion_val + num_sunflowers_val + num_tulips_val
@@ -176,7 +176,28 @@ history = model.fit_generator(train_data_gen,steps_per_epoch=int(np.ceil(total_t
 )
 
 # 모델 훈련 후 training과 validation과 관련된 그래프를 plot했다.
+# 모델 훈련할 때 선언했던 history 변수를 가지고 손실 함수를 계산한다.
+acc = history.history['accuracy']
+val_acc = history.history['val_accuracy']
 
+loss = history.history['loss']
+val_loss = history.history['val_loss']
+
+epochs_range = range(epochs)
+
+plt.figure(figsize=(8, 8))
+plt.subplot(1, 2, 1)
+plt.plot(epochs_range, acc, label='Training Accuracy')
+plt.plot(epochs_range, val_acc, label='Validation Accuracy')
+plt.legend(loc='lower right')
+plt.title('Training and Validation Accuracy')
+
+plt.subplot(1, 2, 2)
+plt.plot(epochs_range, loss, label='Training Loss')
+plt.plot(epochs_range, val_loss, label='Validation Loss')
+plt.legend(loc='upper right')
+plt.title('Training and Validation Loss')
+plt.show()
 
 
 
