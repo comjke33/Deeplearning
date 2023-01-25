@@ -15,6 +15,8 @@
 중간 보고서 제출: 2023년 1월 12일 (합격✅)  
 결과 보고서 제출: 2023년 2월 10일
 
+### NOTION link ###
+[융합연구동아리_장경은](https://comjke33.notion.site/4f4b06c6dc144f73b172aa313a34dc3f?v=ead7b7458e1c4bfb80f51e147b4a9f29)
 ### PRODUCT ###
 - Tensorflow 설치
 - 선형 회귀 모델 간단 제작
