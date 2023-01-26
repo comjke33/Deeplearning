@@ -132,6 +132,8 @@ model.compile(
   metrics=['accuracy'])
 
 # 에포크 6으로 model.fit() 훈련시켰다
+# 미쳤다. 정확도 99.41%!!!!!!!!!
+# 이것이 전이 학습의 힘인가...
 EPOCHS = 6
 history = model.fit(train_batches,
                     epochs=EPOCHS,
