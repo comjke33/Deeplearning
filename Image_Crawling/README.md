@@ -69,6 +69,10 @@ print(paths)   #printing absolute paths of the downloaded images
 - 불과 3~4달 전에 파이썬 라이브러리가 개발자에 의해 수정되었다.  
 [find_element_by_css_selector 참고 블로그](https://bskyvision.com/entry/python-selenium-%ED%81%AC%EB%A1%A4%EB%A7%81-findelementbycssselector-%EB%8D%94-%EC%9D%B4%EC%83%81-%EC%82%AC%EC%9A%A9-%EB%B6%88%EA%B0%80)
 - 이 블로그를 참고하면, find_element_by_css_selector를 버리고 find_element를 사용하라고 했다.
+- 관련 라이브러리를 import한다.
+```python
+from selenium.webdriver.common.by import By
+```
 - 그래서 google_images_download.py 파일에 들어가서 CTRL+F를 누르고 find_element를 찾는다.
 - 정확히 3개가 나오는데, find_element_by_css_selector와 관련된 명령어를 모두 find_element로 수정한다. 
 - 어떻게 업데이트 되었냐면, 수정할 부분을 매개변수로 넣는 방식으로 바뀌었다.
