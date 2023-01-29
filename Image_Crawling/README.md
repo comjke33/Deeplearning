@@ -66,7 +66,7 @@ print(paths)   #printing absolute paths of the downloaded images
 - 최대한 절대주소로 적어주는 것이 나도 알아보기 쉽고 컴퓨터에게 정확히 알려주기 좋다고 한다.
 - 경로 설정은 terminal창에 cd로도 가능하다.
 - 실행해보면, 오류가 난다.
-- 불과 3~4달 전에 파이썬 라이브러리가 개발자에 의해 수정되었다.
+- 불과 3~4달 전에 파이썬 라이브러리가 개발자에 의해 수정되었다.  
 [find_element_by_css_selector 참고 블로그](https://bskyvision.com/entry/python-selenium-%ED%81%AC%EB%A1%A4%EB%A7%81-findelementbycssselector-%EB%8D%94-%EC%9D%B4%EC%83%81-%EC%82%AC%EC%9A%A9-%EB%B6%88%EA%B0%80)
 - 이 블로그를 참고하면, find_element_by_css_selector를 버리고 find_element를 사용하라고 했다.
 - 그래서 google_images_download.py 파일에 들어가서 CTRL+F를 누르고 find_element를 찾는다.
