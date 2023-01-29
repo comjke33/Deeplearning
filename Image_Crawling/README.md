@@ -47,4 +47,52 @@ print(paths)
 
 매우 빠르게 100개의 스도쿠 사진을 저장했다.
 
+## 크롤링 101개 이상 대용량으로 다운받는 법
+- 100개씩 다운받기에는 데이터셋을 빠르게 만들기에 어려움이 있다.
+- 난 일단 sudoku라는 키워드로 1000개를 다운받기 위해 시도했는데, 코드 자체가 100개를 기준으로 다운받는 방식이 분리되어있다. 
+- 그리고 이참에 jpg 파일 형식만 다운받고 싶어서 기존에 테스트했던 사진 파일들도 모두 지웠다.
+- 가장 먼저 chromedriver를 자신의 환경에 맞게 가져와서 exe 파일을 자신의 프로젝트 폴더 안에 넣는다.
+[chromedriver download](https://sites.google.com/chromium.org/driver/)
+- 다음으로 searching.py 파일을 수정한다.
+```python
+from google_images_download import google_images_download   #importing the library
 
+response = google_images_download.googleimagesdownload()   #class instantiation
+
+arguments = {"keywords":"sudoku","limit":1000,"print_urls":True,"chromedriver":"E:/first/chromedriver.exe","format":"jpg"}   #creating list of arguments
+paths = response.download(arguments)   #passing the arguments to the function
+print(paths)   #printing absolute paths of the downloaded images
+```
+- 최대한 절대주소로 적어주는 것이 나도 알아보기 쉽고 컴퓨터에게 정확히 알려주기 좋다고 한다.
+- 경로 설정은 terminal창에 cd로도 가능하다.
+- 실행해보면, 오류가 난다.
+- 불과 3~4달 전에 파이썬 라이브러리가 개발자에 의해 수정되었다.
+[find_element_by_css_selector 참고 블로그](https://bskyvision.com/entry/python-selenium-%ED%81%AC%EB%A1%A4%EB%A7%81-findelementbycssselector-%EB%8D%94-%EC%9D%B4%EC%83%81-%EC%82%AC%EC%9A%A9-%EB%B6%88%EA%B0%80)
+- 이 블로그를 참고하면, find_element_by_css_selector를 버리고 find_element를 사용하라고 했다.
+- 그래서 google_images_download.py 파일에 들어가서 CTRL+F를 누르고 find_element를 찾는다.
+- 정확히 3개가 나오는데, find_element_by_css_selector와 관련된 명령어를 모두 find_element로 수정한다. 
+- 어떻게 업데이트 되었냐면, 수정할 부분을 매개변수로 넣는 방식으로 바뀌었다.
+```python
+try:
+            browser.find_element(By.CSS_SELECTOR,"[aria-label='Accept all']").click()
+            time.sleep(1)
+        except selenium.common.exceptions.NoSuchElementException:
+            pass
+
+        print("Getting you a lot of images. This may take a few moments...")
+
+        element = browser.find_element(By.TAG_NAME, "body")
+        # Scroll down
+        for i in range(50):
+            element.send_keys(Keys.PAGE_DOWN)
+            time.sleep(0.3)
+
+        try:
+            browser.find_element(By.XPATH, '//input[@value="Show more results"]').click()
+            for i in range(50):
+                element.send_keys(Keys.PAGE_DOWN)
+                time.sleep(0.3)  # bot id protection
+```
+![image](https://user-images.githubusercontent.com/117588181/215311035-758f018d-6446-464a-ae2f-9cedc88cfa81.png)
+- 참고해서 다 수정해주면 끝!
+- 알아서 driver 잡고, 맞는 명령어로 크롤링까지 해준다.
