@@ -51,7 +51,7 @@ print(paths)
 - 100개씩 다운받기에는 데이터셋을 빠르게 만들기에 어려움이 있다.
 - 난 일단 sudoku라는 키워드로 1000개를 다운받기 위해 시도했는데, 코드 자체가 100개를 기준으로 다운받는 방식이 분리되어있다. 
 - 그리고 이참에 jpg 파일 형식만 다운받고 싶어서 기존에 테스트했던 사진 파일들도 모두 지웠다.
-- 가장 먼저 chromedriver를 자신의 환경에 맞게 가져와서 exe 파일을 자신의 프로젝트 폴더 안에 넣는다.
+- 가장 먼저 chromedriver를 자신의 환경에 맞게 가져와서 exe 파일을 자신의 프로젝트 폴더 안에 넣는다.  
 [chromedriver download](https://sites.google.com/chromium.org/driver/)
 - 다음으로 searching.py 파일을 수정한다.
 ```python
