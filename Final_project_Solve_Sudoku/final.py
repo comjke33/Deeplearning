@@ -49,13 +49,16 @@ data_classes=len(os.listdir("E:/sudoku/sudoku"))
 data_X = []
 data_Y = []
 for i in range(0,data_classes):
-    pic = cv2.imread("E:/sudoku/sudoku" +"/"+str(i)+".jpg")
-    pic = cv2.resize(pic,(32,32)) 
-    data_X.append(pic)
-    data_Y.append(i)
-    # 성공했으면, 문구 내보내기
-    if len(data_X)==len(data_Y):
-        print("Total Datapoints= ", len(data_X))
+    try:
+        pic = cv2.imread("E:/sudoku/sudoku" +"/"+str(i)+".jpg")
+        pic = cv2.resize(pic,(32,32)) 
+        data_X.append(pic)
+        data_Y.append(i)
+        # 성공했으면, 문구 내보내기
+        if len(data_X)==len(data_Y):
+            print("Total Datapoints= ", len(data_X))
+    except:
+        print("예외가 발생했습니다.")
 
 # X, Y에 넣는다.
 # 배열화해서 접근이 용이하게 한다.
@@ -125,21 +128,22 @@ model.add(Flatten())
 #출력층
 model.add(Dense(500,activation='relu'))
 model.add(Dropout(0.5))
-model.add(Dense(500, activation='softmax'))
- 
+model.add(Dense(10, activation='softmax'))
+
 # 모델 정보 출력
 model.summary()
 
 # 모델 컴파일 
 # RMSprop 옵티마이저
 optimizer = RMSprop(lr=0.001, rho=0.9, epsilon = 1e-08, decay=0.0)
-model.compile(optimizer = optimizer,loss='sparse_categorical_crossentropy',metrics=['accuracy'])
+model.compile(optimizer = optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
 
 # 모델 학습 시작!
 history = model.fit(datagen.flow(train_X, train_Y, batch_size=32),
-                              epochs = 30, validation_data = (validation_X, validation_Y),
+                              epochs = 10, validation_data = (validation_X, validation_Y),
                               verbose = 2, steps_per_epoch= 200)
+
 '''
 # Test 데이터를 이용해 중간 점검
 score = model.evaluate(test_X, test_Y, verbose=0)
