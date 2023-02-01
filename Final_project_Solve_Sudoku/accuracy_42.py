@@ -44,21 +44,27 @@ from sklearn.metrics import accuracy_score, classification_report
 from pathlib import Path
 from PIL import Image
 
+
+
+
 # 1. dataset를 불러옴.
-data_classes=len(os.listdir("E:/sudoku/sudoku"))
+data_classes=len(os.listdir("E:/sudoku/digit"))
+print(data_classes)
 data_X = []
 data_Y = []
 for i in range(0,data_classes):
-    try:
-        pic = cv2.imread("E:/sudoku/sudoku" +"/"+str(i)+".jpg")
-        pic = cv2.resize(pic,(32,32)) 
-        data_X.append(pic)
-        data_Y.append(i)
-        # 성공했으면, 문구 내보내기
-        if len(data_X)==len(data_Y):
-            print("Total Datapoints= ", len(data_X))
-    except:
-        print("예외가 발생했습니다.")
+    data_list = os.listdir("E:/sudoku/digit"+"/"+str(i))
+    for j in data_list:
+        try:
+            pic = cv2.imread("E:/sudoku/digit" +"/"+str(i)+"/"+str(j))
+            pic = cv2.resize(pic,(32,32)) 
+            data_X.append(pic)
+            data_Y.append(i)
+            # 성공했으면, 문구 내보내기
+            if len(data_X)==len(data_Y):
+                print("Total Datapoints= ", len(data_X))
+        except:
+            print("예외가 발생했습니다.")
 
 # X, Y에 넣는다.
 # 배열화해서 접근이 용이하게 한다.
@@ -98,13 +104,14 @@ test_X = test_X.reshape(test_X.shape[0], test_X.shape[1], test_X.shape[2],1)
 validation_X = validation_X.reshape(validation_X.shape[0], validation_X.shape[1], validation_X.shape[2],1)
 
 # Augmentation 이용 
+# 반전, 회전, 줌
 datagen = ImageDataGenerator(width_shift_range=0.1, height_shift_range=0.1, zoom_range=0.2, shear_range=0.1, rotation_range=10)
 datagen.fit(train_X)
 
 # One Hot Encoding 이용
 # One-Hot encoding이란: 값을 0과 1로 인식하는 과정
 # 클래스에 맞춰 라벨을 붙이기 위한 것
-rain_y = to_categorical(train_Y, data_classes)
+train_Y = to_categorical(train_Y, data_classes)
 test_Y = to_categorical(test_Y, data_classes)
 validation_Y = to_categorical(validation_Y, data_classes)
 
@@ -142,11 +149,10 @@ model.compile(optimizer = optimizer, loss='categorical_crossentropy', metrics=['
 # 모델 학습 시작!
 history = model.fit(datagen.flow(train_X, train_Y, batch_size=32),
                               epochs = 10, validation_data = (validation_X, validation_Y),
-                              verbose = 2, steps_per_epoch= 200)
-
-'''
+                              verbose = 2, steps_per_epoch= 40)
+                      
+                      
 # Test 데이터를 이용해 중간 점검
 score = model.evaluate(test_X, test_Y, verbose=0)
 print('Test Score = ',score[0])
 print('Test Accuracy =', score[1])
-'''
