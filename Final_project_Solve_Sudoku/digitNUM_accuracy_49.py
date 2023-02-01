@@ -104,6 +104,7 @@ test_X = test_X.reshape(test_X.shape[0], test_X.shape[1], test_X.shape[2],1)
 validation_X = validation_X.reshape(validation_X.shape[0], validation_X.shape[1], validation_X.shape[2],1)
 
 # Augmentation 이용 
+# 각각 한번씩 augmentation 취하는 것을 추가함
 # 반전, 회전, 줌
 datagen = ImageDataGenerator(horizontal_flip=True)
 datagen.fit(train_X)
